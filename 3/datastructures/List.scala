@@ -121,4 +121,11 @@ object List {
   def product2(l: List[Double]) = {
     foldRight(l, 1.0)((x, y) => x * y)
   }
+
+  def length[A](l: List[A]): Int = {
+    // use foldRight
+    l match {
+      case Nil => 0
+    }
+  }
 }
