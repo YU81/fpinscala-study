@@ -58,13 +58,13 @@ object List {
   def dropWhile[A](l: List[A], f: A => Boolean): List[A] = {
     l match {
       case Nil => Nil
-      case Cons(h, t) if !f(h) => dropWhile(t, f)
+      case Cons(h, t) if f(h) => dropWhile(t, f)
       case _ => l
     }
   }
 
   def dropWhileFilter[A](x: A): Boolean = {
-    x.toString != "7"
+    x != 5
   }
 
   def dropWhileAnswer[A](l: List[A], f: A => Boolean): List[A] =
@@ -97,6 +97,13 @@ object List {
       case Nil => Nil
       case Cons(_, Nil) => Nil
       case Cons(h, t) => Cons(h, init(t))
+    }
+  }
+
+  def dropWhileCurry[A](l: List[A])(f: A => Boolean): List[A] = {
+    l match {
+      case Cons(h, t) if f(h) => dropWhileCurry(t)(f)
+      case _ => l
     }
   }
 }
