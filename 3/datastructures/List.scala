@@ -124,8 +124,13 @@ object List {
 
   def length[A](l: List[A]): Int = {
     // use foldRight
-    l match {
-      case Nil => 0
+    val cnt = 0
+    def go[A](l: List[A], cnt: Int): Int = {
+      l match {
+        case Nil => 0
+        case Cons(x, xs) => foldRight(l, 0)((_, cnt) => cnt + 1)
+      }
     }
+    go(l, 0)
   }
 }
