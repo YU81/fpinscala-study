@@ -165,7 +165,17 @@ in greater stack space usage at runtime.
   }
 
   def reverse[A](l: List[A]): List[A] = {
-    var ret = List()
+    val ret = List()
+    //    l match {
+    //      case Nil => Nil
+    //    }
+    ret
+  }
+
+  def reverseAnswer[A](l: List[A]): List[A] = {
+    foldLeft(l, List[A]())((acc, h) => Cons(h, acc))
+  }
+
   def foldLeftByFoldRight[A, B](l: List[A], z: B)(f: (B, A) => B): A = {
     l match {
       case Nil => z
