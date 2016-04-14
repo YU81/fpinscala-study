@@ -176,12 +176,12 @@ in greater stack space usage at runtime.
     foldLeft(l, List[A]())((acc, h) => Cons(h, acc))
   }
 
-  def foldLeftByFoldRight[A, B](l: List[A], z: B)(f: (B, A) => B): A = {
-    l match {
-      case Nil => z
-      case Cons(x, xs) => f(foldRight(xs, z)(f), x)
-    }
-  }
+  //  def foldLeftByFoldRight[A, B](l: List[A], z: B)(f: (B, A) => B): A = {
+  //    l match {
+  //      case Nil => z
+  //      case Cons(x, xs) => f(foldRight(xs, z)(f), x)
+  //    }
+  //  }
 
   // ans 3.13
   /*
@@ -298,5 +298,26 @@ The other implementations build up a chain of functions which, when called, resu
   Equivalent:
   innerIdent(combiner(combiner(combiner(Nil,  1), 2),  3))
   */
+  //  def appendViaFoldRight[A](a1: List[A], a2: List[A]): List[A] = {
+  //    foldRightViaFoldLeft(a2, a1)((l: List[A], _) => _)
+  //  }
 
+  //  def appendViaFoldLeft[A](a1: List[A], a2: List[A]): List[A] = {
+  //    foldRightViaFoldLeft(a2, a1)((l: List[A], _) => _)
+  //  }
+
+  def appendViaFoldRightAnswer[A](l: List[A], r: List[A]): List[A] =
+    foldRight(l, r)(Cons(_, _))
+
+  def addOne(l: List[Int]): List[Int] = {
+    foldRight(l, fpinscala.datastructures.Nil: List[Int])((x, y) => Cons(x + 1, y))
+  }
+
+  def toStringList(l: List[Double]): List[String] = {
+    foldRight(l, fpinscala.datastructures.Nil: List[String])((x, y) => Cons(x.toString(), y))
+  }
+
+  def map[A, B](as: List[A])(f: A => B): List[B] = {
+    foldRight(as, Nil: List[B])((h, t) => Cons(f(h), t))
+  }
 }
