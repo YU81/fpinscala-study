@@ -320,4 +320,23 @@ The other implementations build up a chain of functions which, when called, resu
   def map[A, B](as: List[A])(f: A => B): List[B] = {
     foldRight(as, Nil: List[B])((h, t) => Cons(f(h), t))
   }
+
+  def filter[A](as: List[A])(f: A => Boolean): List[A] = {
+    foldRight(as, Nil: List[A])((h, t) => if (f(h)) Cons(h, t) else t)
+  }
+
+  def flatMap[A, B](as: List[A])(f: A => List[B]): List[B] = {
+    foldRight(as, Nil: List[B])((h, t) => append(f(h), t))
+  }
+
+  def concatAnswer[A](l: List[List[A]]): List[A] =
+    foldRight(l, Nil: List[A])(append)
+
+  def flatMapAnswer[A, B](as: List[A])(f: A => List[B]): List[B] = {
+    concatAnswer(map(as)(f))
+  }
+
+  def filterViaFlatMap[A](as: List[A])(f: A => Boolean): List[A] = {
+    flatMapAnswer(as)((h) => if (f(h)) List(h) else Nil:List[A])
+  }
 }
