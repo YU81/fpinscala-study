@@ -20,4 +20,14 @@ object Tree {
       case Leaf(v) => v
     }
   }
+
+  def depth[A](t: Tree[A]): Int = {
+    def go(t: Tree[A], d: Int): Int = {
+      t match {
+        case Branch(l, r) => go(l, d + 1) max go(r, d + 1)
+        case Leaf(v) => d
+      }
+    }
+    go(t, 1)
+  }
 }
